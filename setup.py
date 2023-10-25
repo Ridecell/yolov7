@@ -47,7 +47,7 @@ extras_require['test'] = tests_require  # magic: test only
 setup(
     name='yolov7',
     version=version(),
-    description='OneFormer: One Transformer to Rule Universal Image Segmentation',
+    description='YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors',
     url='https://github.com/WongKinYiu/yolov7',
     author='WongKinYiu',
     author_email='',
