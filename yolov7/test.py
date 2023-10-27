@@ -9,13 +9,13 @@ import torch
 import yaml
 from tqdm import tqdm
 
-from models.experimental import attempt_load
-from utils.datasets import create_dataloader
-from utils.general import coco80_to_coco91_class, check_dataset, check_file, check_img_size, check_requirements, \
+from yolov7.models.experimental import attempt_load
+from yolov7.utils.datasets import create_dataloader
+from yolov7.utils.general import coco80_to_coco91_class, check_dataset, check_file, check_img_size, check_requirements, \
     box_iou, non_max_suppression, scale_coords, xyxy2xywh, xywh2xyxy, set_logging, increment_path, colorstr
-from utils.metrics import ap_per_class, ConfusionMatrix
-from utils.plots import plot_images, output_to_target, plot_study_txt
-from utils.torch_utils import select_device, time_synchronized, TracedModel
+from yolov7.utils.metrics import ap_per_class, ConfusionMatrix
+from yolov7.utils.plots import plot_images, output_to_target, plot_study_txt
+from yolov7.utils.torch_utils import select_device, time_synchronized, TracedModel
 
 
 def test(data,
@@ -254,7 +254,9 @@ def test(data,
     # Save JSON
     if save_json and len(jdict):
         w = Path(weights[0] if isinstance(weights, list) else weights).stem if weights is not None else ''  # weights
-        anno_json = './coco/annotations/instances_val2017.json'  # annotations json
+        current_path = os.path.abspath(__file__)
+        parent_path = f"{os.path.dirname(os.path.dirname(current_path))}" #assumes coco is downloaded in the root folder of the repo
+        anno_json = f'{parent_path}/coco/annotations/instances_val2017.json'  # annotations json
         pred_json = str(save_dir / f"{w}_predictions.json")  # predictions json
         print('\nEvaluating pycocotools mAP... saving %s...' % pred_json)
         with open(pred_json, 'w') as f:
